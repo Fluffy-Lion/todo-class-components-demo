@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
+class App extends React.Component {
+  state = {
+    todo: [],
+    userInput: ""
+  }
+
+  addHandler = () => {
+    let newTodo = [...this.state.todo]
+    newTodo.push(this.state.userInput)
+    this.setState({todo: newTodo})
+    this.setState({userInput: ""})
+  }
+
+
+  render() {
+    console.log(this.state)
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>tasks</h1>
+      {this.state.todo.map((item, index) => {
+        return <h2>{item}</h2>
+      })}
+      <input onChange={(event) => this.setState({userInput: event.target.value})} 
+              value={this.state.userInput}
+              />
+      <p>{this.state.userInput}</p>
+      <button onClick={this.addHandler}>add task</button>
     </div>
   );
+}
+}
+
+const Person = (props) => {
+  return (
+    <h2>{props.name}</h2>
+  )
 }
 
 export default App;
