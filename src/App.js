@@ -1,57 +1,56 @@
-import React from 'react';
-import styled from 'styled-components';
-import UserInput from './UserInput';
+import React from 'react'
 
-const Button = styled.button `
-  border: solid 4px red;
-  border-radius: 10px;
-`
+const TaskItem = ({ task, deleteHandler, index }) => {
+  return (
+  <div>
+    <h2>your task is....{task}</h2>
+    <button onClick={() => deleteHandler(index)}>delete</button>
+  </div>  
+  )
+}
 
 class App extends React.Component {
   state = {
-    todo: [],
+    todos: [],
     userInput: ""
   }
 
-  addHandler = (event) => {
-    event.preventDefault()
-    let newTodo = [...this.state.todo]
-    newTodo.push(this.state.userInput)
-    this.setState({ todo: newTodo })
-    this.setState({ userInput: "" })
+
+  changeHandler = (event) => {
+    this.setState({ userInput: event.target.value })
   }
   
-  deleteHandler = (i) => {
-    let newTodo = [...this.state.todo]
-    newTodo.splice(i, 1)
-    this.setState({ todo: newTodo})
+  addHandler = (event) => {
+    event.preventDefault()
+    let newArr = [...this.state.todos]
+    newArr.push(this.state.userInput)
+    this.setState({ todos : newArr })
+    this.setState({ userInput: "" })
   }
 
-  updateInput = (e) => {
-    this.setState({ userInput: e.target.value })
+  deleteHandler = (index) => {
+    let newArr = [...this.state.todos]
+    newArr.splice(index, 1)
+    this.setState({ todos : newArr })
   }
-
-  render() {
-    console.log(this.state)
-    return (
-    <div className="App">
-      <h1>tasks</h1>
-      {this.state.todo.map((item, index) => {
-        return (
-         
-          <div key={index}>
-            <h2>{item}</h2>
-            <Button onClick={() => this.deleteHandler(index)}>delete</Button>
-          </div>
-        )
-      })}
-      <form onSubmit={this.addHandler}>
-        <UserInput updateInput={this.updateInput} userInput={this.state.userInput} />
-        <button type="submit">add task</button>
-      </form>
-    </div>
-  );
-}
+  
+  render(){
+    
+    return(
+      <div>
+        <h1>app</h1>
+        <div>
+          {this.state.todos.map((todo, index) => {
+            return <TaskItem key={index} task={todo} index={index} deleteHandler={this.deleteHandler} />
+          })}
+        </div>
+        <form onSubmit={this.addHandler}>
+          <input value={this.state.userInput} onChange={this.changeHandler}/>
+          <button type="submit">add task</button>
+        </form>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
