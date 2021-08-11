@@ -1,17 +1,14 @@
 import React from 'react'
+import styled from 'styled-components'
+import TaskItem from './components/TaskItem'
+const PageWrap = styled.div `
+  border: solid green 4px;
+`
 
-const TaskItem = ({ task, deleteHandler, index }) => {
-  return (
-  <div>
-    <h2>your task is....{task}</h2>
-    <button onClick={() => deleteHandler(index)}>delete</button>
-  </div>  
-  )
-}
 
 class App extends React.Component {
   state = {
-    todos: [],
+    todos: ['this is a test'],
     userInput: ""
   }
 
@@ -37,7 +34,7 @@ class App extends React.Component {
   render(){
     
     return(
-      <div>
+      <PageWrap>
         <h1>app</h1>
         <div>
           {this.state.todos.map((todo, index) => {
@@ -48,7 +45,7 @@ class App extends React.Component {
           <input value={this.state.userInput} onChange={this.changeHandler}/>
           <button type="submit">add task</button>
         </form>
-      </div>
+      </PageWrap>
     )
   }
 }
